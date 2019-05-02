@@ -1,0 +1,14 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t xcodemaker/data_service .
+
+script:
+  - docker images xcodemaker/data_service
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push xcodemaker/data_service;
+    
